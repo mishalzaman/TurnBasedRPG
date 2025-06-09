@@ -11,14 +11,23 @@ set(SOURCES
     "src/gpu/WebGPUContext.cpp"
     "src/gpu/WebGPUDevice.cpp"
     "src/gpu/WebGPUAdapter.cpp"
-    "src/gpu/TestClass.cpp"
 )
 
-# Group files in Visual Studio under the "src" folder
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src PREFIX "src" FILES ${SOURCES})
+# Manually list all header files
+set(HEADERS
+    "src/gpu/WebGPUContext.h"
+    "src/gpu/WebGPUDevice.h"
+    "src/gpu/WebGPUAdapter.h"
+)
+
+# Combine source and header files
+set(ALL_FILES ${SOURCES} ${HEADERS})
+
+# Group files in Visual Studio according to folder structure
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}/src" FILES ${ALL_FILES})
 
 # Create the executable with explicit source files
-add_executable(App ${SOURCES})
+add_executable(App ${ALL_FILES})
 target_link_libraries(App PRIVATE webgpu)
 
 # Set C++ standard and warnings
